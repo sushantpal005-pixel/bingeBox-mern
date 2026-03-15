@@ -44,6 +44,7 @@ const login = () => {
       }
     } else {
       // register
+      dispatch(setLoading(true))
       const user = { fullName, email, password }
       
       try {
@@ -55,9 +56,12 @@ const login = () => {
           toast.success(res.data.message)
         }
         setIsLogin(true)
+
       } catch (error) {
         toast.error(error.response.data.message)
         console.log(error)
+      } finally{
+        dispatch(setLoading(false))
       }
     }
 
