@@ -8,3 +8,6 @@ export const options = {
 };
 
 export const now_Playing_Movies = "https://api.themoviedb.org/3/movie/now_playing"
+export const Popular_Movie = "https://api.themoviedb.org/3/movie/popular"
+export const Top_Rated_Movie = "https://api.themoviedb.org/3/movie/top_rated"
+export const Upcoming_Movie = "https://api.themoviedb.org/3/movie/upcoming"

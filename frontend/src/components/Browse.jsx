@@ -5,29 +5,26 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import MainContainer from './MainContainer'
 import MovieContainer from './MovieContainer'
-import axios from 'axios'
-import { now_Playing_Movies, options } from '../utils/constant'
-import { getNowPlayingMovies } from '../redux/movieSlice'
+
+import useNowPlayingMovies from '../hooks/useNowPlayingMovies'
+import usePopularMovies from '../hooks/usePopularMovies'
+import useTopRatedMovies from '../hooks/useTopRatedMovies'
+import useUpcomingMovies from '../hooks/useUpcomingMovies'
 const Browse = () => {
   const user = useSelector(store => store.app.user)
-  
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const nowPlayingMovies = async()=>{
-    try {
-      const res = await axios.get(now_Playing_Movies, options)
-      
-      dispatch(getNowPlayingMovies(res.data.results))
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  //my custom hooks
+  useNowPlayingMovies()       
+  usePopularMovies()         
+  useTopRatedMovies() 
+  useUpcomingMovies()
+  
+
 
   useEffect(() => {
     if (!user) {
       navigate("/")
     }
-    nowPlayingMovies()
   }, [])
   return (
     <div>
