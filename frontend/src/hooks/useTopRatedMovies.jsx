@@ -7,7 +7,7 @@ const useTopRatedMovies = async () => {
     try {
         const res = await axios.get(Top_Rated_Movie, options)
         dispatch(getTopRatedMovie(res.data.results))
-        console.log("top rated",res.data.results)
+        //console.log("top rated",res.data.results)
     } catch (error) {
         console.log(error)
     }

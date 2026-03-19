@@ -10,15 +10,18 @@ import useNowPlayingMovies from '../hooks/useNowPlayingMovies'
 import usePopularMovies from '../hooks/usePopularMovies'
 import useTopRatedMovies from '../hooks/useTopRatedMovies'
 import useUpcomingMovies from '../hooks/useUpcomingMovies'
+import SearchMovie from './SearchMovie'
 const Browse = () => {
   const user = useSelector(store => store.app.user)
+  const toggle = useSelector(store => store.movie.toggle)
+  console.log("toggle value",toggle)
   const navigate = useNavigate()
   //my custom hooks
-  useNowPlayingMovies()       
-  usePopularMovies()         
-  useTopRatedMovies() 
+  useNowPlayingMovies()
+  usePopularMovies()
+  useTopRatedMovies()
   useUpcomingMovies()
-  
+
 
 
   useEffect(() => {
@@ -30,8 +33,15 @@ const Browse = () => {
     <div>
       <Header />
       <div>
-        <MainContainer/>
-        <MovieContainer/>
+        {
+          toggle ? <SearchMovie /> : (
+            <>
+              <MainContainer />
+              <MovieContainer />
+            </>
+          )
+        }
+
       </div>
     </div>
   )

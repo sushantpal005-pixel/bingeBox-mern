@@ -7,7 +7,7 @@ const useNowPlayingMovies = async () => {
     try {
         const res = await axios.get(now_Playing_Movies, options)
         dispatch(getNowPlayingMovies(res.data.results))
-        console.log("now playing movies",res.data.results)
+        //console.log("now playing movies",res.data.results)
     } catch (error) {
         console.log(error)
     }
