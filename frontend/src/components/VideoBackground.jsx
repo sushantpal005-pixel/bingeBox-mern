@@ -10,7 +10,7 @@ const VideoBackground = ({movieId,bool}) => {
     <div className='w-[vw] overflow-hidden'>
       <iframe  
       className={`${bool ? "w-[100%]" : "w-screen aspect-video" } `}
-      src={`https://www.youtube.com/embed/${trailerMovie.key}?si=OEFMwLEQ69o7Bkbz&autoplay=1&mute=1` }
+      src={`https://www.youtube.com/embed/${trailerMovie?.key}?si=OEFMwLEQ69o7Bkbz&autoplay=1&mute=1` }
       title="YouTube video player" 
       frameBorder="0" 
       allowFullScreen></iframe>

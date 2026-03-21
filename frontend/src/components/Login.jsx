@@ -4,7 +4,7 @@ import axios from "axios"
 import toast from 'react-hot-toast';
 import Header from "./Header"
 import { API_END_POINT } from "../utils/constant"
-import { useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setLoading } from "../redux/userSlice";
 
@@ -15,7 +15,7 @@ const login = () => {
   const [password, setPassword] = useState("")
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  const isLoading = useSelector(store=>store.app.isLoading)
+  const isLoading = useSelector(store => store.app.isLoading)
   const loginHandler = () => {
     setIsLogin(!isLogin)
   }
@@ -25,34 +25,39 @@ const login = () => {
     dispatch(setLoading(true))
     if (isLogin) {
       //login
-      const user = { email, password}
+      const user = { email, password }
       try {
-        const res = await axios.post(`${API_END_POINT}/login`, user, {headers: {
-          "Content-Type": "application/json"}, withCredentials: true
+        const res = await axios.post(`${API_END_POINT}/login`, user, {
+          headers: {
+            "Content-Type": "application/json"
+          }, withCredentials: true
         })
-        
-        if(res.data.success){
+
+        if (res.data.success) {
           toast.success(res.data.message)
+          dispatch(setUser(res.data.user))
+          navigate("/browse")
         }
-        dispatch(setUser(res.data.user))
-        navigate("/browse")
+
       } catch (error) {
         toast.error(error.response.data.message)
         console.log(error)
-      } finally{
+      } finally {
         dispatch(setLoading(false))
       }
     } else {
       // register
       dispatch(setLoading(true))
       const user = { fullName, email, password }
-      
+
       try {
-        const res = await axios.post(`${API_END_POINT}/register`, user, {headers: {
-          "Content-Type": "application/json"}, withCredentials: true
+        const res = await axios.post(`${API_END_POINT}/register`, user, {
+          headers: {
+            "Content-Type": "application/json"
+          }, withCredentials: true
         })
-        
-        if(res.data.success){
+
+        if (res.data.success) {
           toast.success(res.data.message)
         }
         setIsLogin(true)
@@ -60,7 +65,7 @@ const login = () => {
       } catch (error) {
         toast.error(error.response.data.message)
         console.log(error)
-      } finally{
+      } finally {
         dispatch(setLoading(false))
       }
     }
@@ -92,7 +97,7 @@ const login = () => {
 
           <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder='password' className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white' />
 
-          <button type="submit" className="bg-red-600 p-3 mt-6 text-white rounded-sm font-medium">{`${isLoading ? "loading...":(isLogin?"Login":"Signup")}`}</button>
+          <button type="submit" className="bg-red-600 p-3 mt-6 text-white rounded-sm font-medium">{`${isLoading ? "loading..." : (isLogin ? "Login" : "Signup")}`}</button>
 
           <p className='text-white mt-2'>{isLogin ? "New to Netflix? " : "Already have an account?"} <span onClick={loginHandler} className="ml-1 text-blue-900 font-medium cursor-pointer">{isLogin ? "Signup" : "Login"}</span></p>
 

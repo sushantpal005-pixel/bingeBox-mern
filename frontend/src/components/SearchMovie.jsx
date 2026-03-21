@@ -9,14 +9,14 @@ const SearchMovie = () => {
     const [searchMovie, setSearchMovie] = useState("")
     const dispatch = useDispatch()
     const isLoading = useSelector(store => store.app.isLoading)
-    const {movieName, searchedMovie} = useSelector(store=>store.searchMovie)
-    
+    const { movieName, searchedMovie } = useSelector(store => store.searchMovie)
+
     const submitHandler = async (e) => {
         e.preventDefault()
         dispatch(setLoading(true))
         try {
             const res = await axios.get(`${SEARCH_MOVIE_URL}${searchMovie}&include_adult=false&language=en-US&page=1`, options);
-            console.log(res.data.results)
+            
             const movies = res?.data?.results
             dispatch(setSearchMovieDetails({ searchMovie, movies }))
         } catch (error) {
@@ -28,7 +28,8 @@ const SearchMovie = () => {
     }
 
     return (
-        <>
+        <div>
+
             <div className='flex justify-center pt-[10%] w-[100%]'>
                 <form onSubmit={submitHandler} className='w-[50%]' action="">
                     <div className='flex justify-between shadow-md border-2 p-2 border-gray-200 rounded-lg w-[100%]'>
@@ -38,8 +39,12 @@ const SearchMovie = () => {
                 </form>
                 {/* yha se start krna hai kal(5:47:20) */}
             </div>
-            <MovieList title={movieName} searchMovie={true} movies={searchedMovie}/>
-        </>
+            {
+                searchedMovie !== null ? (<MovieList title={movieName} searchMovie={true} movies={searchedMovie} />) : (<h1 className='flex justify-center p-30 font-bold'>Movie Not found !!</h1>)
+            }
+        </div>
+
+
     )
 }
 

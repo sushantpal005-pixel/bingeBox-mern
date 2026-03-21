@@ -14,7 +14,7 @@ import SearchMovie from './SearchMovie'
 const Browse = () => {
   const user = useSelector(store => store.app.user)
   const toggle = useSelector(store => store.movie.toggle)
-  console.log("toggle value",toggle)
+  
   const navigate = useNavigate()
   //my custom hooks
   useNowPlayingMovies()

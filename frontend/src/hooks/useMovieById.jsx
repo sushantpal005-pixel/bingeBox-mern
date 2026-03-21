@@ -44,7 +44,7 @@ const useMovieById = (movieId) => {
         };
 
         getMovieById();
-    }, []); 
+    }, [movieId]); 
 };
 
 export default useMovieById;
