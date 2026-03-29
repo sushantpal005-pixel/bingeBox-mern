@@ -17,7 +17,7 @@ const Header = () => {
   const navigate = useNavigate()
   const logoutHandler = async ()=>{
     try {
-      const res = await axios.get(`${API_END_POINT}/logout`)
+      const res = await axios.get(`${API_END_POINT}/api/v1/user/logout`)
       if(res.data.success){
         toast.success(res.data.message)
       }

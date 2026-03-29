@@ -27,11 +27,12 @@ const login = () => {
       //login
       const user = { email, password }
       try {
-        const res = await axios.post(`${API_END_POINT}/login`, user, {
+        const res = await axios.post(`${API_END_POINT}/api/v1/user/login`, user, {
           headers: {
             "Content-Type": "application/json"
           }, withCredentials: true
         })
+        console.log(API_END_POINT)
 
         if (res.data.success) {
           toast.success(res.data.message)
@@ -51,7 +52,7 @@ const login = () => {
       const user = { fullName, email, password }
 
       try {
-        const res = await axios.post(`${API_END_POINT}/register`, user, {
+        const res = await axios.post(`${API_END_POINT}/api/v1/user/register`, user, {
           headers: {
             "Content-Type": "application/json"
           }, withCredentials: true
