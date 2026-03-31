@@ -100,7 +100,7 @@ const login = () => {
 
           <button type="submit" className="bg-red-600 p-3 mt-6 text-white rounded-sm font-medium">{`${isLoading ? "loading..." : (isLogin ? "Login" : "Signup")}`}</button>
 
-          <p className='text-white mt-2'>{isLogin ? "New to Netflix? " : "Already have an account?"} <span onClick={loginHandler} className="ml-1 text-blue-900 font-medium cursor-pointer">{isLogin ? "Signup" : "Login"}</span></p>
+          <p className='text-white mt-2'>{isLogin ? "New to bingebox? " : "Already have an account?"} <span onClick={loginHandler} className="ml-1 text-blue-900 font-medium cursor-pointer">{isLogin ? "Signup" : "Login"}</span></p>
 
         </div>
       </form>
