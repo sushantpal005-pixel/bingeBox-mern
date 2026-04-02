@@ -28,24 +28,70 @@ const SearchMovie = () => {
     }
 
     return (
-        <div>
+  <div className="min-h-screen bg-black text-white px-4 sm:px-6 md:px-10 pt-24">
+    
+    {/* Search Bar */}
+    <div className="flex justify-center">
+      <form
+        onSubmit={submitHandler}
+        className="w-full sm:w-10/12 md:w-8/12 lg:w-6/12"
+      >
+        <div className="flex items-center bg-white rounded-lg overflow-hidden shadow-md">
+          
+          <input
+            value={searchMovie}
+            onChange={(e) => setSearchMovie(e.target.value)}
+            className="flex-1 px-3 sm:px-4 py-2 sm:py-3 text-black outline-none text-sm sm:text-base"
+            type="text"
+            placeholder="Search Movies..."
+          />
 
-            <div className='flex justify-center pt-[10%] w-[100%]'>
-                <form onSubmit={submitHandler} className='w-[50%]' action="">
-                    <div className='flex justify-between shadow-md border-2 p-2 border-gray-200 rounded-lg w-[100%]'>
-                        <input value={searchMovie} onChange={(e) => { setSearchMovie(e.target.value) }} className='w-full outline-none rounded-md text-lg' type="text" placeholder='Search Movies' />
-                        <button className='bg-red-800 text-white rounded-md px-4 py-2'>{isLoading ? "loading..." : "Search"}</button>
-                    </div>
-                </form>
-                {/* yha se start krna hai kal(5:47:20) */}
-            </div>
-            {
-                searchedMovie !== null ? (<MovieList title={movieName} searchMovie={true} movies={searchedMovie} />) : (<h1 className='flex justify-center p-30 font-bold'>Movie Not found !!</h1>)
-            }
+          <button className="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-5 py-2 sm:py-3 text-sm sm:text-base">
+            {isLoading ? "Loading..." : "Search"}
+          </button>
+
         </div>
+      </form>
+    </div>
 
+    {/* Results */}
+    <div className="mt-8">
+      {searchedMovie && searchedMovie.length > 0 ? (
+        <MovieList
+          title={movieName}
+          searchMovie={true}
+          movies={searchedMovie}
+        />
+      ) : (
+        <h1 className="text-center mt-10 text-lg sm:text-xl font-semibold text-gray-300">
+          Movie Not Found !!
+        </h1>
+      )}
+    </div>
 
-    )
+  </div>
+);
 }
 
 export default SearchMovie
+
+
+// return(
+//         <div>
+
+//             <div className='flex justify-center pt-[10%] w-[100%]'>
+//                 <form onSubmit={submitHandler} className='w-[50%]' action="">
+//                     <div className='flex justify-between shadow-md border-2 p-2 border-gray-200 rounded-lg w-[100%]'>
+//                         <input value={searchMovie} onChange={(e) => { setSearchMovie(e.target.value) }} className='w-full outline-none rounded-md text-lg' type="text" placeholder='Search Movies' />
+//                         <button className='bg-red-800 text-white rounded-md px-4 py-2'>{isLoading ? "loading..." : "Search"}</button>
+//                     </div>
+//                 </form>
+//                 {/* yha se start krna hai kal(5:47:20) */}
+//             </div>
+//             {
+//                 searchedMovie !== null ? (<MovieList title={movieName} searchMovie={true} movies={searchedMovie} />) : (<h1 className='flex justify-center p-30 font-bold'>Movie Not found !!</h1>)
+//             }
+//         </div>
+
+
+//     )
