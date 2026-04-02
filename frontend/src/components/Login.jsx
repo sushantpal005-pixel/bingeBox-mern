@@ -1,111 +1,134 @@
-import { useState } from "react"
-import React from 'react'
-import axios from "axios"
-import toast from 'react-hot-toast';
-import Header from "./Header"
-import { API_END_POINT } from "../utils/constant"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import React from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import Header from "./Header";
+import { API_END_POINT } from "../utils/constant";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setLoading } from "../redux/userSlice";
 
-const login = () => {
-  const [isLogin, setIsLogin] = useState(false)
-  const [fullName, setFullName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+const Login = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const isLoading = useSelector(store => store.app.isLoading)
-  const loginHandler = () => {
-    setIsLogin(!isLogin)
-  }
+  const dispatch = useDispatch();
+  const isLoading = useSelector((store) => store.app.isLoading);
+
+  const loginHandler = () => setIsLogin(!isLogin);
 
   const getInputData = async (e) => {
     e.preventDefault();
-    dispatch(setLoading(true))
-    if (isLogin) {
-      //login
-      const user = { email, password }
-      try {
-        const res = await axios.post(`${API_END_POINT}/api/v1/user/login`, user, {
-          headers: {
-            "Content-Type": "application/json"
-          }, withCredentials: true
-        })
-        console.log(API_END_POINT)
+    dispatch(setLoading(true));
+
+    try {
+      if (isLogin) {
+        const res = await axios.post(
+          `${API_END_POINT}/api/v1/user/login`,
+          { email, password },
+          { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        );
 
         if (res.data.success) {
-          toast.success(res.data.message)
-          dispatch(setUser(res.data.user))
-          navigate("/browse")
+          toast.success(res.data.message);
+          dispatch(setUser(res.data.user));
+          navigate("/browse");
         }
-
-      } catch (error) {
-        toast.error(error.response.data.message)
-        console.log(error)
-      } finally {
-        dispatch(setLoading(false))
-      }
-    } else {
-      // register
-      dispatch(setLoading(true))
-      const user = { fullName, email, password }
-
-      try {
-        const res = await axios.post(`${API_END_POINT}/api/v1/user/register`, user, {
-          headers: {
-            "Content-Type": "application/json"
-          }, withCredentials: true
-        })
+      } else {
+        const res = await axios.post(
+          `${API_END_POINT}/api/v1/user/register`,
+          { fullName, email, password },
+          { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        );
 
         if (res.data.success) {
-          toast.success(res.data.message)
+          toast.success(res.data.message);
+          setIsLogin(true);
         }
-        setIsLogin(true)
-
-      } catch (error) {
-        toast.error(error.response.data.message)
-        console.log(error)
-      } finally {
-        dispatch(setLoading(false))
       }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
+    } finally {
+      dispatch(setLoading(false));
     }
 
-    setFullName("")
-    setEmail("")
-    setPassword("")
-
-  }
-
-
-
+    setFullName("");
+    setEmail("");
+    setPassword("");
+  };
 
   return (
-    <div>
+    <div className="relative min-h-screen">
       <Header />
-      <div className='absolute'>
-        <img className='w-[100vw] h-[100vh] bg-cover' src="https://assets.nflxext.com/ffe/siteui/vlv3/dc1cf82d-97c9-409f-b7c8-6ac1718946d6/14a8fe85-b6f4-4c06-8eaf-eccf3276d557/IN-en-20230911-popsignuptwoweeks-perspective_alpha_website_medium.jpg" alt="banner" />
+
+      {/* Background */}
+      <img
+        className="absolute w-full h-full object-cover -z-10"
+        src="https://assets.nflxext.com/ffe/siteui/vlv3/dc1cf82d-97c9-409f-b7c8-6ac1718946d6/14a8fe85-b6f4-4c06-8eaf-eccf3276d557/IN-en-20230911-popsignuptwoweeks-perspective_alpha_website_medium.jpg"
+        alt="banner"
+      />
+
+      {/* Form Container */}
+      <div className="flex items-center justify-center min-h-screen px-4">
+        <form
+          onSubmit={getInputData}
+          className="w-full sm:w-8/12 md:w-6/12 lg:w-4/12 bg-black bg-opacity-90 p-6 sm:p-10 rounded-md"
+        >
+          <h1 className="text-white text-2xl sm:text-3xl mb-5 font-bold text-center">
+            {isLogin ? "Login" : "Signup"}
+          </h1>
+
+          <div className="flex flex-col">
+            {!isLogin && (
+              <input
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                type="text"
+                placeholder="Full Name"
+                className="p-3 my-2 rounded bg-gray-800 text-white outline-none"
+              />
+            )}
+
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="Email"
+              className="p-3 my-2 rounded bg-gray-800 text-white outline-none"
+            />
+
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="Password"
+              className="p-3 my-2 rounded bg-gray-800 text-white outline-none"
+            />
+
+            <button
+              type="submit"
+              className="bg-red-600 p-3 mt-6 text-white rounded font-medium hover:bg-red-700 transition"
+            >
+              {isLoading ? "Loading..." : isLogin ? "Login" : "Signup"}
+            </button>
+
+            <p className="text-white mt-4 text-sm text-center">
+              {isLogin ? "New to BingeBox?" : "Already have an account?"}
+              <span
+                onClick={loginHandler}
+                className="ml-2 text-blue-400 cursor-pointer hover:underline"
+              >
+                {isLogin ? "Signup" : "Login"}
+              </span>
+            </p>
+          </div>
+        </form>
       </div>
-      <form onSubmit={getInputData} className='absolute p-12 top-11 flex flex-col w-3/12 items-center justify-center my-36 left-0 right-0 mx-auto rounded-md bg-black opacity-90'>
-        <h1 className='text-white text-3xl mb-5 font-bold'>{isLogin ? "Login" : "Signup"}</h1>
-        <div className='flex flex-col '>
-
-          {
-            !isLogin && <input value={fullName} onChange={(e) => setFullName(e.target.value)} type="text" placeholder='FullName' className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white' />
-          }
-
-          <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder='Email' className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white' />
-
-          <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder='password' className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white' />
-
-          <button type="submit" className="bg-red-600 p-3 mt-6 text-white rounded-sm font-medium">{`${isLoading ? "loading..." : (isLogin ? "Login" : "Signup")}`}</button>
-
-          <p className='text-white mt-2'>{isLogin ? "New to bingebox? " : "Already have an account?"} <span onClick={loginHandler} className="ml-1 text-blue-900 font-medium cursor-pointer">{isLogin ? "Signup" : "Login"}</span></p>
-
-        </div>
-      </form>
     </div>
-  )
-}
+  );
+};
 
-export default login
+export default Login;
