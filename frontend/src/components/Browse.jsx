@@ -24,11 +24,11 @@ const Browse = () => {
 
 
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/")
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/")
+  //   }
+  // }, [])
   return (
     <div>
       <Header />
