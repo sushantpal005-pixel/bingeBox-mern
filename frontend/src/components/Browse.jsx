@@ -34,7 +34,7 @@ const Browse = () => {
       <Header />
       <div>
         {
-          toggle ? <SearchMovie /> : (
+          toggle ? <div className='pt-16'> <SearchMovie /> </div> : (
             <>
               <MainContainer />
               <MovieContainer />
