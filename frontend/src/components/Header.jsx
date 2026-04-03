@@ -91,7 +91,7 @@ const Header = () => {
   };
 
   return (
-  <div className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 sm:px-6 md:px-10 py-3 bg-black/70 backdrop-blur-md">
+  <div className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 sm:px-6 md:px-10 py-3 bg-black backdrop-blur-md">
     
     {/* Logo */}
     <img
