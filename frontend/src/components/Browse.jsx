@@ -14,7 +14,7 @@ import SearchMovie from './SearchMovie'
 const Browse = () => {
   const user = useSelector(store => store.app.user)
   const toggle = useSelector(store => store.movie.toggle)
-  
+
   const navigate = useNavigate()
   //my custom hooks
   useNowPlayingMovies()
@@ -24,11 +24,11 @@ const Browse = () => {
 
 
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/")
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
   return (
     <div>
       <Header />
@@ -47,4 +47,4 @@ const Browse = () => {
   )
 }
 
-export default Browse
+export default Browse;
